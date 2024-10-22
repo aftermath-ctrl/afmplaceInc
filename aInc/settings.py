@@ -203,3 +203,7 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SECURE = True # new
     CSRF_COOKIE_SECURE = True # new
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # new
+
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
