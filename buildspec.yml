@@ -9,7 +9,7 @@ env:
 phases:
     
   install:
-    runtime-versions:
+    #runtime-versions:
       #docker: latest
       #python: 3.10
     commands:
