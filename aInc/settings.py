@@ -49,7 +49,7 @@ DEBUG = True
 ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')       
 
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','localhost']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','localhost', 'afmplaceinc', 'www.afmplaceinc.com']
 
 
 # Application definition
@@ -202,4 +202,4 @@ if ENVIRONMENT == 'production':
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SESSION_COOKIE_SECURE = True # new
     CSRF_COOKIE_SECURE = True # new
-    #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # new
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # new
