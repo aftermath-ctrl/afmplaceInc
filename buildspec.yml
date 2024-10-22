@@ -27,7 +27,7 @@ phases:
 
       - chmod 400 /tmp/afmplaceInc.pem
 
-
+ 
 
 
       - ECR_PASSWORD=$(aws ecr get-login-password --region us-east-1)
@@ -44,11 +44,11 @@ phases:
 
   build:
     commands:
-      - docker build -t aInc --cache-from $ECR_BASE_IMAGE .
+      - docker build -t afmplaceinc --cache-from $ECR_BASE_IMAGE .
 
       - echo "Tagging Docker image for ECR..."
 
-      - docker tag aInc:latest 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest
+      - docker tag afmplaceinc:latest 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest
 
       
 
@@ -61,7 +61,7 @@ phases:
 
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 347385777102.dkr.ecr.us-east-1.amazonaws.com
 
-      - docker push 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest
+      - docker push 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest
 
       # Stop and remove existing containers on EC2
 
@@ -91,7 +91,7 @@ phases:
       - echo Deploying to EC2 instance...
 
 
-      - ssh -o "StrictHostKeyChecking no" -i .github/afmplaceInc.pem ubuntu@ec2-52-72-215-79.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest && cd /home/ec2-user && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest"
+      - ssh -o "StrictHostKeyChecking no" -i .github/afmplaceInc.pem ubuntu@ec2-52-72-215-79.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest && cd /home/ec2-user && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest"
 
 
       #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Stop containers" --parameters commands=["docker ps -q | xargs docker stop","docker system prune -f"]
@@ -101,18 +101,18 @@ phases:
       #- echo "Pulling docker image..."
 
 
-      #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Deploy new container" --parameters commands=["docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest"]
+      #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Deploy new container" --parameters commands=["docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest"]
 
       #- echo "Running new container..."
 
-      #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Run new container" --parameters commands=["docker run -d -p 8000:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc"]
+      #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Run new container" --parameters commands=["docker run -d -p 8000:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc"]
 
 
       #- echo "Checking SSM command execution status..."
       #- aws ssm list-command-invocations --instance-id i-05fcbe43b634cbd27 --details
 
 
-      #- printf '[{"image":"%s"}]' 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest > imagedefinitions.json
+      #- printf '[{"image":"%s"}]' 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest > imagedefinitions.json
 
             # Set correct permissions for Lightsail SSH key
 
@@ -140,14 +140,14 @@ phases:
 
 
 
-      #- ssh -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem admin@ec2-3-89-66-20.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/aInc:latest"
+      #- ssh -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem admin@ec2-3-89-66-20.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest"
     
 
 
-      #- scp -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem docker-compose.yml admin@ec2-3-89-66-20.compute-1.amazonaws.com:/home/admin/aInc/afmplace_final
-      #- ssh -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem admin@ec2-3-89-66-20.compute-1.amazonaws.com 'docker-compose -f /home/admin/aInc/afmplace_final/docker-compose.yml pull && docker-compose -f /home/admin/aInc/afmplace_final/docker-compose.yml up -d'
+      #- scp -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem docker-compose.yml admin@ec2-3-89-66-20.compute-1.amazonaws.com:/home/admin/afmplaceinc/afmplace_final
+      #- ssh -o StrictHostKeyChecking=no -i .github/afmplaceInc.pem admin@ec2-3-89-66-20.compute-1.amazonaws.com 'docker-compose -f /home/admin/afmplaceinc/afmplace_final/docker-compose.yml pull && docker-compose -f /home/admin/afmplaceinc/afmplace_final/docker-compose.yml up -d'
 
-      #- aws lightsail push-container-image --service-name afm --label imagedefinitions.json  --image aInc:latest
+      #- aws lightsail push-container-image --service-name afm --label imagedefinitions.json  --image afmplaceinc:latest
 
       - echo App deployed!
 
