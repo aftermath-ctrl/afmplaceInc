@@ -10,7 +10,7 @@ phases:
     
   install:
     runtime-versions:
-      docker: 23
+      docker: 26.1.4
       #python: 3.10
     commands:
       - curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
