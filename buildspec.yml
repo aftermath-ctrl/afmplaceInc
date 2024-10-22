@@ -91,7 +91,8 @@ phases:
       - echo Deploying to EC2 instance...
 
 
-      - ssh -o "StrictHostKeyChecking no" -i .github/afmplaceInc.pem ubuntu@ec2-52-72-215-79.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest && cd /home/ec2-user && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest"
+      - ssh -o "StrictHostKeyChecking no" -i .github/afmplaceInc.pem ubuntu@ec2-52-72-215-79.compute-1.amazonaws.com "docker pull 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest && cd /home/ubuntu
+ && docker run -d -p 80:8000 347385777102.dkr.ecr.us-east-1.amazonaws.com/afmplaceinc:latest"
 
 
       #- aws ssm send-command --instance-ids i-05fcbe43b634cbd27 --document-name "AWS-RunShellScript" --comment "Stop containers" --parameters commands=["docker ps -q | xargs docker stop","docker system prune -f"]
